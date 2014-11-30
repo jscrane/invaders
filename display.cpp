@@ -8,7 +8,7 @@
 #include "display.h"
 
 void Display::begin() {
-	UTFTDisplay::begin(VGA_BLACK, VGA_WHITE, false);
+	UTFTDisplay::begin(VGA_BLACK, VGA_WHITE, PORTRAIT);
 	clear();
 	_xoff = (_dx - DISPLAY_X) / 2;
 	_yoff = (_dy - DISPLAY_Y) / 2;
@@ -24,10 +24,15 @@ void Display::operator=(byte b) {
 
 	for (unsigned i = 0, bit = 0x01; i < 8; i++, bit *= 2)
 		if ((d & bit) != (b & bit)) {
-			unsigned fg = VGA_WHITE, yi = y - i;
-			// FIXME: colours
+			unsigned fg = VGA_WHITE, yi = y - i - 2*_yoff;
+			if (yi > 32 && yi <= 64)
+				fg = VGA_RED;
+			else if (yi > 184 && yi <= 240)
+				fg = VGA_LIME;
+			else if (yi > 240 && x >=16 && x < 134)
+				fg = VGA_LIME;
 			utft.setColor((b & bit)? fg: VGA_BLACK);
-			utft.drawPixel(x + _xoff, yi - _yoff);
+			utft.drawPixel(x + _xoff, yi + _yoff);
 		}
 
 	_buf[_acc] = b;
