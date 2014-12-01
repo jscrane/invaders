@@ -15,6 +15,4 @@
 
 #define PAUSE		0x29	// space
 
-#define	IMAGES	"/invaders/"
-
 #endif
