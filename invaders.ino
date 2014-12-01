@@ -80,12 +80,6 @@ void loop(void) {
 			case PS2_F1:
 				reset();
 				break;
-			case PS2_F6:
-				// FIXME
-				break;
-			case PS2_F7:
-				// FIXME
-				break;
 			case PS2_F8:
 				cpu.debug();
 				break;
