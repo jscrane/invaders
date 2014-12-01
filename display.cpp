@@ -14,16 +14,13 @@ void Display::begin() {
 	_yoff = (_dy - DISPLAY_Y) / 2;
 }
 
-void Display::operator=(byte b) {
-	byte d = _buf[_acc];
-	if (d == b)
-		return;
-	
-	unsigned y = DISPLAY_Y - (_acc % BYTES_PER_LINE) * 8;
-	unsigned x = (_acc / BYTES_PER_LINE);
+void Display::draw(Memory::address a, byte b) {
+	unsigned y = DISPLAY_Y - (a % BYTES_PER_LINE) * 8;
+	unsigned x = (a / BYTES_PER_LINE);
 
+	byte d = _buf[a] ^ b;
 	for (unsigned i = 0, bit = 0x01; i < 8; i++, bit *= 2)
-		if ((d & bit) != (b & bit)) {
+		if (d & bit) {
 			unsigned fg = VGA_WHITE, yi = y - i;
 			if (yi > 32 && yi <= 64)
 				fg = VGA_RED;
@@ -35,7 +32,7 @@ void Display::operator=(byte b) {
 			utft.drawPixel(x + _xoff, yi + _yoff);
 		}
 
-	_buf[_acc] = b;
+	_buf[a] = b;
 }
 
 void Display::checkpoint(Stream &s) {
@@ -43,5 +40,10 @@ void Display::checkpoint(Stream &s) {
 }
 
 void Display::restore(Stream &s) {
-	s.readBytes((char *)_buf, sizeof(_buf));
+	byte b[256];
+	for (Memory::address a = 0; a < sizeof(_buf); a += sizeof(b)) {
+		s.readBytes((char *)b, sizeof(b));
+		for (unsigned i = 0; i < sizeof(b); i++)
+			draw(a+i, b[i]);
+	}
 }

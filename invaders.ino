@@ -41,14 +41,16 @@ bool halted = false;
 ram page;
 Display display;
 
+static unsigned long next_int;
+static unsigned interrupt;
+static bool paused = false;
+
 void reset(void) {
 	bool sd = hardware_reset();
 	display.begin();
+	paused = false;
 	halted = (setjmp(ex) != 0);
 }
-
-static unsigned long next_int;
-static unsigned interrupt;
 
 void setup(void) {
 	hardware_init(cpu);
@@ -87,12 +89,17 @@ void loop(void) {
 			case PS2_F8:
 				cpu.debug();
 				break;
+			case PAUSE:
+				paused = !paused;
+				break;
 			default:
 				io.up(key);
 				break;
 			}
 		else
 			io.down(key);
+	} else if (paused) {
+		// do nothing
 	} else if (!halted) {
 		cpu.run(1000);
 		unsigned long now = millis();
@@ -101,6 +108,5 @@ void loop(void) {
 			interrupt = interrupt == 1? 2: 1;
 			next_int = now + 1000 / 60 / 2;
 		}
-	} else
-		Serial.println("halted");
+	}
 }

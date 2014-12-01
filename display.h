@@ -14,10 +14,12 @@ public:
 	void checkpoint(Stream &s);
 	void restore(Stream &s);
 
-	void operator=(byte);
+	void operator=(byte b) { if (_buf[_acc] != b) draw(_acc, b); }
 	operator byte() { return _buf[_acc]; }
 
 private:
+	void draw(Memory::address a, byte b);
+
 	byte _buf[DISPLAY_RAM];
 	unsigned _xoff, _yoff;
 };
