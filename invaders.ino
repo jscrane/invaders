@@ -13,6 +13,8 @@
 #include "i8080.h"
 #include "io.h"
 #include "display.h"
+#include "config.h"
+
 #include "roms/rome.h"
 #include "roms/romf.h"
 #include "roms/romg.h"
@@ -49,7 +51,6 @@ static unsigned long next_int;
 static unsigned interrupt;
 
 void setup(void) {
-	Serial.begin(115200);
 	hardware_init(cpu);
 
 	memory.put(h, 0x0000);
@@ -76,6 +77,12 @@ void loop(void) {
 			switch(key) {
 			case PS2_F1:
 				reset();
+				break;
+			case PS2_F6:
+				// FIXME
+				break;
+			case PS2_F7:
+				// FIXME
 				break;
 			case PS2_F8:
 				cpu.debug();

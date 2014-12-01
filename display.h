@@ -11,6 +11,9 @@ public:
 	Display(): Memory::Device(sizeof(_buf)) {}
 	void begin();
 
+	void checkpoint(Stream &s);
+	void restore(Stream &s);
+
 	void operator=(byte);
 	operator byte() { return _buf[_acc]; }
 

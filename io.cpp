@@ -2,18 +2,7 @@
 
 #include "ports.h"
 #include "io.h"
-
-#define P1_START	0x16	// 1
-#define P1_LEFT		0x12	// l-shift
-#define P1_RIGHT	0x14	// l-ctrl
-#define P1_SHOOT	0x11	// l-alt
-
-#define P2_START	0x1e	// 2
-#define P2_LEFT		0x27	// r-gui
-#define P2_RIGHT	0x2f	// apps
-#define P2_SHOOT	0x59	// r-shift
-
-#define COIN		0x26	// 3
+#include "config.h"
 
 IO::IO() {
 	_p1 = _p2 = 0;
@@ -51,8 +40,6 @@ void IO::out(byte port, byte b, i8080 *cpu) {
 }
 
 void IO::down(unsigned key) {
-Serial.print("down ");
-Serial.println(key, 16);
 	switch (key) {
 	case P1_START:
 		_p1 |= 0x04;
@@ -85,8 +72,6 @@ Serial.println(key, 16);
 }
 
 void IO::up(unsigned key) {
-Serial.print("up ");
-Serial.println(key, 16);
 	switch (key) {
 	case P1_START:
 		_p1 &= ~0x04;
