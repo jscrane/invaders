@@ -2,10 +2,18 @@
 #define __I8080_H__
 
 #undef sbi
+#undef PC
 
 class i8080: public CPU {
 public:
-	i8080(Memory &, jmp_buf *, CPU::statfn, PortDevice &);
+
+	class Ports {
+	public:
+		virtual void out(byte p, byte v, i8080 *cpu) =0;
+		virtual byte in(byte p, i8080 *cpu) =0;
+	};
+
+	i8080(Memory &, jmp_buf *, CPU::statfn, Ports &);
 
 	void run(unsigned);
 	void reset();
@@ -58,7 +66,7 @@ private:
 		byte SR;
 	};
 	int _irq_pending;
-	PortDevice *_ports;
+	Ports *_ports;
 
 	typedef void (i8080::*OP)(); 
 	OP _ops[256];

@@ -1,7 +1,7 @@
-#ifndef __KBD_H__
-#define __KBD_H__
+#ifndef __IO_H__
+#define __IO_H__
 
-class IO: public PortDevice {
+class IO: public i8080::Ports {
 public:
 	IO();
 
