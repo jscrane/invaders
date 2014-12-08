@@ -8,8 +8,8 @@
 #include <SpiRAM.h>
 #include <SD.h>
 #include <r65emu.h>
+#include <i8080.h>
 
-#include "i8080.h"
 #include "io.h"
 #include "display.h"
 #include "config.h"
