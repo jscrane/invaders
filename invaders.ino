@@ -35,7 +35,7 @@ void status(const char *fmt, ...) {
 
 IO io;
 jmp_buf ex;
-i8080 cpu(memory, &ex, status, io);
+i8080 cpu(memory, ex, status, io);
 bool halted = false;
 ram page;
 Display display;
