@@ -75,7 +75,9 @@ void loop(void) {
 	if (ps2.available()) {
 		unsigned scan = ps2.read2();
 		byte key = scan & 0xff;
-		if (scan > 0xff)
+		if (is_down(scan))
+			io.down(scan);
+		else
 			switch(key) {
 			case PS2_F1:
 				reset();
@@ -90,8 +92,6 @@ void loop(void) {
 				io.up(key);
 				break;
 			}
-		else
-			io.down(key);
 	} else if (!paused && !halted) {
 		cpu.run(1000);
 		unsigned long now = millis();
