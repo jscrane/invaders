@@ -40,7 +40,7 @@ void IO::out(byte port, byte b, i8080 *cpu) {
 	}
 }
 
-void IO::down(unsigned key) {
+void IO::down(byte key) {
 	switch (key) {
 	case P1_START:
 		_p1 |= 0x04;
@@ -72,7 +72,7 @@ void IO::down(unsigned key) {
 	}
 }
 
-void IO::up(unsigned key) {
+void IO::up(byte key) {
 	switch (key) {
 	case P1_START:
 		_p1 &= ~0x04;

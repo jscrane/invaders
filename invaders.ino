@@ -45,7 +45,7 @@ static unsigned interrupt;
 static bool paused = false;
 
 void reset(void) {
-	bool sd = hardware_reset();
+	hardware_reset();
 	display.begin();
 	paused = false;
 	halted = (setjmp(ex) != 0);
@@ -73,8 +73,9 @@ void setup(void) {
 
 void loop(void) {
 	if (ps2.available()) {
-		unsigned key = ps2.read();
-		if (ps2.isbreak())
+		unsigned scan = ps2.read2();
+		byte key = scan & 0xff;
+		if (scan > 0xff)
 			switch(key) {
 			case PS2_F1:
 				reset();
@@ -91,9 +92,7 @@ void loop(void) {
 			}
 		else
 			io.down(key);
-	} else if (paused) {
-		// do nothing
-	} else if (!halted) {
+	} else if (!paused && !halted) {
 		cpu.run(1000);
 		unsigned long now = millis();
 		if (now > next_int) {

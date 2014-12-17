@@ -8,8 +8,8 @@ public:
 	byte in(byte p, i8080 *cpu);
 	void out(byte p, byte b, i8080 *cpu);
 
-	void down(unsigned key);
-	void up(unsigned key);
+	void down(byte key);
+	void up(byte key);
 
 private:
 	byte _soff, _s0, _s1, _p1, _p2;
