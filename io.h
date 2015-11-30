@@ -1,12 +1,12 @@
 #ifndef __IO_H__
 #define __IO_H__
 
-class IO: public i8080::Ports {
+class IO: public PortDevice<i8080> {
 public:
 	IO();
 
-	byte in(byte p, i8080 *cpu);
-	void out(byte p, byte b, i8080 *cpu);
+	byte in(word p, i8080 *cpu);
+	void out(word p, byte b, i8080 *cpu);
 
 	void down(byte key);
 	void up(byte key);
