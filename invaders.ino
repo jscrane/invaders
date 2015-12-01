@@ -9,7 +9,7 @@
 #include <SD.h>
 #include <r65emu.h>
 #include <ports.h>
-#include <i8080.h>
+#include <z80.h>
 
 #include "io.h"
 #include "display.h"
@@ -36,7 +36,7 @@ void status(const char *fmt, ...) {
 
 IO io;
 jmp_buf ex;
-i8080 cpu(memory, ex, status, io);
+z80 cpu(memory, ex, status, io);
 bool halted = false;
 ram page;
 Display display;

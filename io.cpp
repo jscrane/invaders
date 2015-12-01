@@ -1,7 +1,7 @@
 #include <Energia.h>
 #include <r65emu.h>
 #include <ports.h>
-#include <i8080.h>
+#include <z80.h>
 
 #include "io.h"
 #include "config.h"
@@ -10,7 +10,7 @@ IO::IO() {
 	_p1 = _p2 = 0;
 }
 
-byte IO::in(word port, i8080 *cpu) {
+byte IO::in(word port, z80 *cpu) {
 	word w;
 	switch (port) {
 	case 0:
@@ -26,7 +26,7 @@ byte IO::in(word port, i8080 *cpu) {
 	return 0x00;
 }
 
-void IO::out(word port, byte b, i8080 *cpu) {
+void IO::out(word port, byte b, z80 *cpu) {
 	switch (port) {
 	case 1:
 		_p1 = b;
