@@ -13,6 +13,7 @@
 
 #include "io.h"
 #include "display.h"
+#include "vblank.h"
 #include "config.h"
 
 #include "roms/rome.h"
@@ -40,9 +41,8 @@ i8080 cpu(memory, ex, status, io);
 bool halted = false;
 ram page;
 Display display;
+vblank vb(cpu);
 
-static unsigned long next_int;
-static unsigned interrupt;
 static bool paused = false;
 
 void reset(void) {
@@ -67,9 +67,6 @@ void setup(void) {
 	memory.put(display, 0x2400);
 
 	reset();
-
-	next_int = (1000 / 60);
-	interrupt = 1;
 }
 
 void loop(void) {
@@ -95,11 +92,6 @@ void loop(void) {
 			}
 	} else if (!paused && !halted) {
 		cpu.run(1000);
-		unsigned long now = millis();
-		if (now > next_int) {
-			cpu.raise(interrupt);
-			interrupt = interrupt == 1? 2: 1;
-			next_int = now + 1000 / 60 / 2;
-		}
+		vb.tick(millis());
 	}
 }
