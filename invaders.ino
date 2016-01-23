@@ -26,19 +26,8 @@ prom f(romf, sizeof(romf));
 prom g(romg, sizeof(romg));
 prom h(romh, sizeof(romh));
 
-void status(const char *fmt, ...) {
-	char tmp[256];  
-	va_list args;
-	va_start(args, fmt);
-	vsnprintf(tmp, sizeof(tmp), fmt, args);
-	Serial.println(tmp);
-	va_end(args);
-}
-
 IO io;
-jmp_buf ex;
-i8080 cpu(memory, ex, status, io);
-bool halted = false;
+i8080 cpu(memory, io);
 ram page;
 Display display;
 vblank vb(cpu);
@@ -49,7 +38,6 @@ void reset(void) {
 	hardware_reset();
 	display.begin();
 	paused = false;
-	halted = (setjmp(ex) != 0);
 }
 
 void setup(void) {
@@ -90,7 +78,7 @@ void loop(void) {
 				io.up(key);
 				break;
 			}
-	} else if (!paused && !halted) {
+	} else if (!paused && !cpu.halted()) {
 		cpu.run(1000);
 		vb.tick(millis());
 	}
