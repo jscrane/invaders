@@ -68,9 +68,6 @@ void loop(void) {
 			case PS2_F1:
 				reset();
 				break;
-			case PS2_F8:
-				cpu.debug();
-				break;
 			case PAUSE:
 				paused = !paused;
 				break;
