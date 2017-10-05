@@ -16,10 +16,10 @@
 #include "vblank.h"
 #include "config.h"
 
-#include "roms/rome.h"
-#include "roms/romf.h"
-#include "roms/romg.h"
-#include "roms/romh.h"
+#include "rome.h"
+#include "romf.h"
+#include "romg.h"
+#include "romh.h"
 
 prom e(rome, sizeof(rome));
 prom f(romf, sizeof(romf));
