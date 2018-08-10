@@ -3,10 +3,10 @@
  * http://www.darkpact.com/proj/siemu/is/report2.html
  */
 #include <stdarg.h>
+#include <SD.h>
 #include <UTFT.h>
 #include <SPI.h>
 #include <SpiRAM.h>
-#include <SD.h>
 #include <r65emu.h>
 #include <ports.h>
 #include <i8080.h>
