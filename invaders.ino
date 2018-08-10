@@ -3,6 +3,7 @@
  * http://www.darkpact.com/proj/siemu/is/report2.html
  */
 #include <stdarg.h>
+#include <FS.h>
 #include <SD.h>
 #include <UTFT.h>
 #include <SPI.h>
