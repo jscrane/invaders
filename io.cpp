@@ -10,8 +10,8 @@ IO::IO() {
 	_p1 = _p2 = 0;
 }
 
-byte IO::in(word port, i8080 *cpu) {
-	word w;
+uint8_t IO::in(uint16_t port, i8080 *cpu) {
+	uint16_t w;
 	switch (port) {
 	case 0:
 		return 0x0f;
@@ -26,7 +26,7 @@ byte IO::in(word port, i8080 *cpu) {
 	return 0x00;
 }
 
-void IO::out(word port, byte b, i8080 *cpu) {
+void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 	switch (port) {
 	case 1:
 		_p1 = b;
@@ -41,7 +41,7 @@ void IO::out(word port, byte b, i8080 *cpu) {
 	}
 }
 
-void IO::down(byte key) {
+void IO::down(uint8_t key) {
 	switch (key) {
 	case P1_START:
 		_p1 |= 0x04;
@@ -73,7 +73,7 @@ void IO::down(byte key) {
 	}
 }
 
-void IO::up(byte key) {
+void IO::up(uint8_t key) {
 	switch (key) {
 	case P1_START:
 		_p1 &= ~0x04;
