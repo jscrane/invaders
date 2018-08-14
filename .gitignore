@@ -1,6 +1,6 @@
 *.bin
 *.elf
-.*.d
+*.d
 .deps
 
 # Compiled Object files
