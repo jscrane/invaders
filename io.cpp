@@ -47,15 +47,43 @@ void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 	case 2:
 		_soff = b & 0x07;
 		break;
+	case 3:
+#ifdef DEBUGGING
+		if (b & 1)
+			Serial.println("ufo");
+		if (b & 2)
+			Serial.println("shot");
+		if (b & 4)
+			Serial.println("player die");
+		if (b & 8)
+			Serial.println("invader die");
+		if (b & 16)
+			Serial.println("extend");
+#endif
+		break;
 	case 4:
 		_s0 = _s1;
 		_s1 = b;
 		break;
+	case 5:
 #ifdef DEBUGGING
-	case 6:
-		Serial.print(debug[b]);
-		break;
+		if (b & 1)
+			Serial.println("walk1");
+		if (b & 2)
+			Serial.println("walk2");
+		if (b & 4)
+			Serial.println("walk3");
+		if (b & 8)
+			Serial.println("walk4");
+		if (b & 16)
+			Serial.println("ufo die");
 #endif
+		break;
+	case 6:
+#ifdef DEBUGGING
+		Serial.print(debug[b]);
+#endif
+		break;
 	}
 }
 
