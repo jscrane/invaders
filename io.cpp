@@ -26,6 +26,22 @@ uint8_t IO::in(uint16_t port, i8080 *cpu) {
 	return 0x00;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef DEBUGGING
+static char debug[] = {
+	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+	'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+	'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+	'Y', 'Z', '0', '1', '2', '3', '4', '5',
+	'6', '7', '8', '9', '<', '>', ' ', '=',
+	'*', '^', '_', '_', '_', '_', '_', '_',
+	'Y', '%', '_', '_', '_', '_', 'Y', '&',
+	'?', '_', '_', '_', '_', '_', '_', '-',
+};
+#endif
+
+>>>>>>> master
 void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 	switch (port) {
 	case 1:
@@ -38,6 +54,11 @@ void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 		_s0 = _s1;
 		_s1 = b;
 		break;
+#ifdef DEBUGGING
+	case 6:
+		Serial.print(debug[b]);
+		break;
+#endif
 	}
 }
 
