@@ -26,8 +26,6 @@ uint8_t IO::in(uint16_t port, i8080 *cpu) {
 	return 0x00;
 }
 
-<<<<<<< HEAD
-=======
 #ifdef DEBUGGING
 static char debug[] = {
 	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
@@ -41,7 +39,6 @@ static char debug[] = {
 };
 #endif
 
->>>>>>> master
 void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 	switch (port) {
 	case 1:
