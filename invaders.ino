@@ -1,6 +1,5 @@
 /**
  * http://www.emutalk.net/threads/38177-Space-Invaders
- * http://www.darkpact.com/proj/siemu/is/report2.html
  */
 #include <stdarg.h>
 #include <SD.h>
@@ -41,6 +40,10 @@ void reset(void) {
 }
 
 void setup(void) {
+#ifdef DEBUGGING
+	Serial.begin(115200);
+#endif
+
 	hardware_init(cpu);
 
 	memory.put(h, 0x0000);
