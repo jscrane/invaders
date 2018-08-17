@@ -3,7 +3,7 @@
  */
 #include <stdarg.h>
 #include <FS.h>
-#include <SD.h>
+#include <SPIFFS.h>
 #include <UTFT.h>
 #include <SPI.h>
 #include <SpiRAM.h>
