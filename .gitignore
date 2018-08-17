@@ -2,6 +2,7 @@
 *.elf
 *.d
 .deps
+.*.swp
 
 # Compiled Object files
 *.slo
