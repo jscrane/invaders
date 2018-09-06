@@ -1,9 +1,11 @@
 #ifndef __IO_H__
 #define __IO_H__
 
+class Sound;
+
 class IO: public PortDevice<i8080> {
 public:
-	IO();
+	IO(Sound *s): _sound(s) { _p1 = _p2 = 0; }
 
 	uint8_t in(uint16_t p, i8080 *cpu);
 	void out(uint16_t p, uint8_t b, i8080 *cpu);
@@ -13,6 +15,8 @@ public:
 
 private:
 	uint8_t _soff, _s0, _s1, _p1, _p2;
+	Sound *_sound;
+	const uint8_t *_playing;
 };
 
 #endif
