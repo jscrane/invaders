@@ -2,13 +2,11 @@
 #include <r65emu.h>
 #include <ports.h>
 #include <i8080.h>
+#include <sound.h>
 
 #include "io.h"
 #include "config.h"
-
-IO::IO() {
-	_p1 = _p2 = 0;
-}
+#include "sounds.h"
 
 uint8_t IO::in(uint16_t port, i8080 *cpu) {
 	uint16_t w;
@@ -27,7 +25,7 @@ uint8_t IO::in(uint16_t port, i8080 *cpu) {
 }
 
 #ifdef DEBUGGING
-static char debug[] = {
+static const char debug[] = {
 	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
 	'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
 	'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -48,36 +46,40 @@ void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 		_soff = b & 0x07;
 		break;
 	case 3:
-#ifdef DEBUGGING
 		if (b & 1)
-			Serial.println("ufo");
-		if (b & 2)
-			Serial.println("shot");
-		if (b & 4)
-			Serial.println("player die");
-		if (b & 8)
-			Serial.println("invader die");
-		if (b & 16)
-			Serial.println("extend");
-#endif
+			_playing = _sound->play(ufo, sizeof(ufo));
+
+		if (_playing != shot && (b & 2))
+			_playing = _sound->play(shot, sizeof(shot));
+
+		if (_playing != basehit && (b & 4))
+			_playing = _sound->play(basehit, sizeof(basehit));
+
+		if (_playing != invhit && (b & 8))
+			_playing = _sound->play(invhit, sizeof(invhit));
+
+		if (_playing != extend && (b & 16))
+			_playing = _sound->play(extend, sizeof(extend));
 		break;
 	case 4:
 		_s0 = _s1;
 		_s1 = b;
 		break;
 	case 5:
-#ifdef DEBUGGING
-		if (b & 1)
-			Serial.println("walk1");
-		if (b & 2)
-			Serial.println("walk2");
-		if (b & 4)
-			Serial.println("walk3");
-		if (b & 8)
-			Serial.println("walk4");
-		if (b & 16)
-			Serial.println("ufo die");
-#endif
+		if (_playing != walk1 && (b & 1))
+			_playing = _sound->play(walk1, sizeof(walk1));
+
+		if (_playing != walk2 && (b & 2))
+			_playing = _sound->play(walk2, sizeof(walk2));
+
+		if (_playing != walk3 && (b & 4))
+			_playing = _sound->play(walk3, sizeof(walk3));
+
+		if (_playing != walk4 && (b & 8))
+			_playing = _sound->play(walk4, sizeof(walk4));
+
+		if (_playing != ufohit && (b & 16))
+			_playing = _sound->play(ufohit, sizeof(ufohit));
 		break;
 	case 6:
 #ifdef DEBUGGING
