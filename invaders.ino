@@ -26,7 +26,7 @@ prom f(romf, sizeof(romf));
 prom g(romg, sizeof(romg));
 prom h(romh, sizeof(romh));
 
-Sound sound;
+DAC sound;
 IO io(&sound);
 i8080 cpu(memory, io);
 ram page;

@@ -2,7 +2,7 @@
 #include <r65emu.h>
 #include <ports.h>
 #include <i8080.h>
-#include <sound.h>
+#include <sound_dac.h>
 
 #include "io.h"
 #include "config.h"
