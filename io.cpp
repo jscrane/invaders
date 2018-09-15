@@ -2,6 +2,7 @@
 #include <r65emu.h>
 #include <ports.h>
 #include <i8080.h>
+#include <hardware.h>
 #include <sound_dac.h>
 
 #include "io.h"
@@ -24,7 +25,7 @@ uint8_t IO::in(uint16_t port, i8080 *cpu) {
 	return 0x00;
 }
 
-#ifdef DEBUGGING
+#if defined(DEBUG)
 static const char debug[] = {
 	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
 	'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -45,6 +46,11 @@ void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 	case 2:
 		_soff = b & 0x07;
 		break;
+	case 4:
+		_s0 = _s1;
+		_s1 = b;
+		break;
+#if defined(DAC_SOUND)
 	case 3:
 		if (b & 1)
 			_playing = _sound->play(ufo, sizeof(ufo));
@@ -60,10 +66,6 @@ void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 
 		if (_playing != extend && (b & 16))
 			_playing = _sound->play(extend, sizeof(extend));
-		break;
-	case 4:
-		_s0 = _s1;
-		_s1 = b;
 		break;
 	case 5:
 		if (_playing != walk1 && (b & 1))
@@ -81,11 +83,12 @@ void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 		if (_playing != ufohit && (b & 16))
 			_playing = _sound->play(ufohit, sizeof(ufohit));
 		break;
-	case 6:
-#ifdef DEBUGGING
-		Serial.print(debug[b]);
 #endif
+#if defined(DEBUG)
+	case 6:
+		Serial.print(debug[b]);
 		break;
+#endif
 	}
 }
 
@@ -118,6 +121,9 @@ void IO::down(uint8_t key) {
 	case COIN:
 		_p1 |= 0x01;
 		break;
+	default:
+		_p1 = _p2 = 0;
+		break;
 	}
 }
 
@@ -149,6 +155,9 @@ void IO::up(uint8_t key) {
 		break;
 	case COIN:
 		_p1 &= ~0x01;
+		break;
+	default:
+		_p1 = _p2 = 0;
 		break;
 	}
 }

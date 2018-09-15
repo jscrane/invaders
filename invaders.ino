@@ -42,7 +42,7 @@ void reset(void) {
 }
 
 void setup(void) {
-#ifdef DEBUGGING
+#if defined(DEBUG)
 	Serial.begin(115200);
 #endif
 
