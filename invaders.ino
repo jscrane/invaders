@@ -2,7 +2,8 @@
  * http://www.emutalk.net/threads/38177-Space-Invaders
  */
 #include <stdarg.h>
-#include <SD.h>
+#include <FS.h>
+#include <SPIFFS.h>
 #include <UTFT.h>
 #include <SPI.h>
 #include <SpiRAM.h>
@@ -25,7 +26,8 @@ prom f(romf, sizeof(romf));
 prom g(romg, sizeof(romg));
 prom h(romh, sizeof(romh));
 
-IO io;
+DAC sound;
+IO io(&sound);
 i8080 cpu(memory, io);
 ram page;
 Display display;
@@ -40,7 +42,7 @@ void reset(void) {
 }
 
 void setup(void) {
-#ifdef DEBUGGING
+#if defined(DEBUG)
 	Serial.begin(115200);
 #endif
 
@@ -56,6 +58,10 @@ void setup(void) {
 
 	// 7k display RAM at 0x2400
 	memory.put(display, 0x2400);
+
+#if defined(DAC_SOUND)
+	sound.begin(DAC_SOUND, 11127);
+#endif
 
 	reset();
 }

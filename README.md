@@ -11,3 +11,5 @@ For more information, see this
 The i8080 emulation isn't perfect but good enough to play Space Invaders properly.
 I used this [testsuite](http://www.idb.me.uk/sunhillow/8080.html) to find bugs.
 
+Kudos to [MoleskiCoder](https://github.com/MoleskiCoder/invaders) for
+pointers to sound emulation.
