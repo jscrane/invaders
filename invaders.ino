@@ -2,8 +2,7 @@
  * http://www.emutalk.net/threads/38177-Space-Invaders
  */
 #include <stdarg.h>
-#include <FS.h>
-#include <SPIFFS.h>
+#include <SD.h>
 #include <UTFT.h>
 #include <SPI.h>
 #include <SpiRAM.h>
