@@ -3,6 +3,7 @@
 *.d
 .deps
 .*.swp
+spiffs.img
 
 # Compiled Object files
 *.slo
