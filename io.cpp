@@ -26,7 +26,7 @@ uint8_t IO::in(uint16_t port, i8080 *cpu) {
 }
 
 #if defined(DEBUG)
-static const char debug[] = {
+static const char debug[] PROGMEM = {
 	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
 	'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
 	'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
