@@ -86,7 +86,7 @@ void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 #endif
 #if defined(DEBUG)
 	case 6:
-		Serial.print(debug[b]);
+		Serial.print(pgm_read_byte(debug+b));
 		break;
 #endif
 	}

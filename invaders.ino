@@ -3,9 +3,11 @@
  */
 #include <stdarg.h>
 #include <FS.h>
+#if defined(ESP32)
 #include <SPIFFS.h>
-#include <UTFT.h>
+#endif
 #include <SPI.h>
+#include <TFT_eSPI.h>
 #include <SpiRAM.h>
 #include <r65emu.h>
 #include <ports.h>
