@@ -6,7 +6,7 @@
 #include "display.h"
 
 void Display::begin() {
-	TFTDisplay::begin(BLACK, WHITE, portrait);
+	TFTDisplay::begin(BLACK, WHITE, reverse_portrait);
 	clear();
 	_xoff = (_dx - DISPLAY_X) / 2;
 	_yoff = (_dy - DISPLAY_Y) / 2;
