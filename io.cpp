@@ -7,7 +7,9 @@
 
 #include "io.h"
 #include "config.h"
+#if defined(DAC_SOUND)
 #include "sounds.h"
+#endif
 
 uint8_t IO::in(uint16_t port, i8080 *cpu) {
 	uint16_t w;
@@ -25,7 +27,7 @@ uint8_t IO::in(uint16_t port, i8080 *cpu) {
 	return 0x00;
 }
 
-#if defined(DEBUG)
+#if defined(DEBUGGING)
 static const char debug[] PROGMEM = {
 	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
 	'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
