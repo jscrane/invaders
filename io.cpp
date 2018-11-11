@@ -7,6 +7,7 @@
 
 #include "io.h"
 #include "config.h"
+
 #if defined(DAC_SOUND)
 #include "sounds.h"
 #endif
