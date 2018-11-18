@@ -15,4 +15,10 @@
 
 #define PAUSE		0x29	// space
 
+#if defined(USE_UTFT)
+#define ORIENTATION	portrait
+#elif defined(USE_ESPI)
+#define ORIENTATION	reverse_portrait
+#endif
+
 #endif

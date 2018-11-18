@@ -3,10 +3,11 @@
 #include <hardware.h>
 #include <tftdisplay.h>
 
+#include "config.h"
 #include "display.h"
 
 void Display::begin() {
-	TFTDisplay::begin(BLACK, WHITE, reverse_portrait);
+	TFTDisplay::begin(BLACK, WHITE, ORIENTATION);
 	clear();
 	_xoff = (_dx - DISPLAY_X) / 2;
 	_yoff = (_dy - DISPLAY_Y) / 2;
