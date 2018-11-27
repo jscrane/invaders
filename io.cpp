@@ -87,7 +87,7 @@ void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 			_playing = _sound->play(ufohit, sizeof(ufohit));
 		break;
 #endif
-#if defined(DEBUG)
+#if defined(DEBUGGING)
 	case 6:
 		Serial.print(pgm_read_byte(debug+b));
 		break;
