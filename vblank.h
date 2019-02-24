@@ -1,7 +1,7 @@
 #ifndef __VBLANK_H__
 #define __VBLANK_H__
 
-class vblank: public Checkpointable {
+class vblank {
 public:
 	vblank(CPU &cpu): _cpu(cpu), _last_int(0), _interrupt(1) {}
 
@@ -12,14 +12,6 @@ public:
 			_interrupt = _interrupt == 1? 2: 1;
 			_last_int = now;
 		}
-	}
-
-	void checkpoint(Stream &s) {
-		// FIXME
-	}
-
-	void restore(Stream &s) {
-		// FIXME
 	}
 
 	static const int interval = 1000 / 60 / 2;

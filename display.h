@@ -11,9 +11,6 @@ public:
 	Display(): Memory::Device(sizeof(_buf)) {}
 	void begin();
 
-	void checkpoint(Stream &s);
-	void restore(Stream &s);
-
 	void operator=(uint8_t b) { if (_buf[_acc] != b) draw(_acc, b); }
 	operator uint8_t() { return _buf[_acc]; }
 

@@ -32,16 +32,3 @@ void Display::draw(Memory::address a, uint8_t b) {
 
 	_buf[a] = b;
 }
-
-void Display::checkpoint(Stream &s) {
-	s.write(_buf, sizeof(_buf));
-}
-
-void Display::restore(Stream &s) {
-	uint8_t b[256];
-	for (Memory::address a = 0; a < sizeof(_buf); a += sizeof(b)) {
-		s.readBytes((char *)b, sizeof(b));
-		for (unsigned i = 0; i < sizeof(b); i++)
-			draw(a+i, b[i]);
-	}
-}
