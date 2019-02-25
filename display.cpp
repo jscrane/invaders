@@ -17,6 +17,18 @@ void Display::draw(Memory::address a, uint8_t b) {
 	unsigned y = DISPLAY_Y - (a % BYTES_PER_LINE) * 8;
 	unsigned x = (a / BYTES_PER_LINE);
 
+#if defined(NO_DISPLAY_BUFFER)
+	for (unsigned i = 0, bit = 0x01; i < 8; i++, bit *= 2) {
+		unsigned fg = WHITE, yi = y - i;
+		if (yi > 32 && yi <= 64)
+			fg = RED;
+		else if (yi > 184 && yi <= 240)
+			fg = GREEN;
+		else if (yi > 240 && x >=16 && x < 134)
+			fg = GREEN;
+		drawPixel(x + _xoff, yi + _yoff, (b & bit)? fg: BLACK);
+	}
+#else
 	uint8_t d = _buf[a] ^ b;
 	for (unsigned i = 0, bit = 0x01; i < 8; i++, bit *= 2)
 		if (d & bit) {
@@ -29,6 +41,6 @@ void Display::draw(Memory::address a, uint8_t b) {
 				fg = GREEN;
 			drawPixel(x + _xoff, yi + _yoff, (b & bit)? fg: BLACK);
 		}
-
 	_buf[a] = b;
+#endif
 }
