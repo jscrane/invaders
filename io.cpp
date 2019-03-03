@@ -10,7 +10,16 @@
 
 #if defined(DAC_SOUND)
 #include "sounds.h"
+
+DAC sound;
+const uint8_t *playing;
 #endif
+
+void IO::begin() {
+#if defined(DAC_SOUND)
+	sound.begin(DAC_SOUND, 11127);
+#endif
+}
 
 uint8_t IO::in(uint16_t port, i8080 *cpu) {
 	uint16_t w;
@@ -56,35 +65,35 @@ void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 #if defined(DAC_SOUND)
 	case 3:
 		if (b & 1)
-			_playing = _sound->play(ufo, sizeof(ufo));
+			playing = sound.play(ufo, sizeof(ufo));
 
-		if (_playing != shot && (b & 2))
-			_playing = _sound->play(shot, sizeof(shot));
+		if (playing != shot && (b & 2))
+			playing = sound.play(shot, sizeof(shot));
 
-		if (_playing != basehit && (b & 4))
-			_playing = _sound->play(basehit, sizeof(basehit));
+		if (playing != basehit && (b & 4))
+			playing = sound.play(basehit, sizeof(basehit));
 
-		if (_playing != invhit && (b & 8))
-			_playing = _sound->play(invhit, sizeof(invhit));
+		if (playing != invhit && (b & 8))
+			playing = sound.play(invhit, sizeof(invhit));
 
-		if (_playing != extend && (b & 16))
-			_playing = _sound->play(extend, sizeof(extend));
+		if (playing != extend && (b & 16))
+			playing = sound.play(extend, sizeof(extend));
 		break;
 	case 5:
-		if (_playing != walk1 && (b & 1))
-			_playing = _sound->play(walk1, sizeof(walk1));
+		if (playing != walk1 && (b & 1))
+			playing = sound.play(walk1, sizeof(walk1));
 
-		if (_playing != walk2 && (b & 2))
-			_playing = _sound->play(walk2, sizeof(walk2));
+		if (playing != walk2 && (b & 2))
+			playing = sound.play(walk2, sizeof(walk2));
 
-		if (_playing != walk3 && (b & 4))
-			_playing = _sound->play(walk3, sizeof(walk3));
+		if (playing != walk3 && (b & 4))
+			playing = sound.play(walk3, sizeof(walk3));
 
-		if (_playing != walk4 && (b & 8))
-			_playing = _sound->play(walk4, sizeof(walk4));
+		if (playing != walk4 && (b & 8))
+			playing = sound.play(walk4, sizeof(walk4));
 
-		if (_playing != ufohit && (b & 16))
-			_playing = _sound->play(ufohit, sizeof(ufohit));
+		if (playing != ufohit && (b & 16))
+			playing = sound.play(ufohit, sizeof(ufohit));
 		break;
 #endif
 #if defined(DEBUGGING)
