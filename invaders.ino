@@ -22,8 +22,7 @@ prom f(romf, sizeof(romf));
 prom g(romg, sizeof(romg));
 prom h(romh, sizeof(romh));
 
-DAC sound;
-IO io(&sound);
+IO io;
 i8080 cpu(memory, io);
 ram page;
 Display display;
@@ -31,9 +30,10 @@ vblank vb(cpu);
 
 static bool paused = false;
 
-void reset(void) {
+static void reset(void) {
 	hardware_reset();
 	display.begin();
+	io.begin();
 	paused = false;
 }
 
@@ -54,10 +54,6 @@ void setup(void) {
 
 	// 7k display RAM at 0x2400
 	memory.put(display, 0x2400);
-
-#if defined(DAC_SOUND)
-	sound.begin(DAC_SOUND, 11127);
-#endif
 
 	reset();
 }
