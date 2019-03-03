@@ -25,7 +25,7 @@ private:
 #if !defined(NO_DISPLAY_BUFFER)
 	uint8_t _buf[DISPLAY_RAM];
 #endif
-	unsigned _xoff, _yoff;
+	uint8_t _xoff, _yoff;
 };
 
 #endif
