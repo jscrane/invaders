@@ -1,8 +1,7 @@
 t ?= esp32
 
-ifeq ($t, lm4f)
-PROCESSOR_FAMILY := lm4f
-BOARD := lplm4f120h5qr
+ifeq ($t, tivac)
+BOARD := EK-LM4F120XL
 CPPFLAGS = -DDEBUGGING -DHARDWARE_H=\"hw/lm4f-utft.h\"
 LIBRARIES = UTFT
 endif
@@ -33,4 +32,4 @@ CPPFLAGS = -DUSER_SETUP_LOADED -DILI9341_DRIVER -DTFT_CS=5 -DTFT_DC=2 \
 LIBRARIES = TFT_eSPI FS SPIFFS
 endif
 
-include arduino-$t.mk
+include $t.mk
