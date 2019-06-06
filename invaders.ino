@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <SPI.h>
 #include <r65emu.h>
+#include <X9C.h>
 #include <ports.h>
 #include <i8080.h>
 
@@ -27,6 +28,11 @@ i8080 cpu(memory, io);
 ram page;
 Display display;
 vblank vb(cpu);
+X9C volume;
+
+#define VOLUME_CS	22
+#define VOLUME_INC	21
+#define VOLUME_UD	19
 
 static bool paused = false;
 
@@ -35,6 +41,7 @@ static void reset(void) {
 	display.begin();
 	io.begin();
 	paused = false;
+	volume.begin(VOLUME_CS, VOLUME_INC, VOLUME_UD);
 }
 
 void setup(void) {
@@ -68,6 +75,12 @@ void loop(void) {
 			switch(key) {
 			case PS2_F1:
 				reset();
+				break;
+			case PS2_F11:
+				volume.trimPot(5, X9C_DOWN);
+				break;
+			case PS2_F12:
+				volume.trimPot(5, X9C_UP);
 				break;
 			case PAUSE:
 				paused = !paused;
