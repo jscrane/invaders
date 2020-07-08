@@ -4,6 +4,9 @@
 .deps
 .*.swp
 spiffs.img
+.build
+boards.txt.mk
+platform.txt.mk
 
 # Compiled Object files
 *.slo
