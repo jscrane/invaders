@@ -21,4 +21,8 @@
 #define ORIENTATION	portrait
 #endif
 
+#if defined(DAC_SOUND)
+#include <X9C.h>
+#endif
+
 #endif
