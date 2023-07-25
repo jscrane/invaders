@@ -1,19 +1,19 @@
 #include <Arduino.h>
 #include <memory.h>
 #include <hardware.h>
-#include <tftdisplay.h>
+#include <display.h>
 
 #include "config.h"
-#include "display.h"
+#include "screen.h"
 
-void Display::begin() {
-	TFTDisplay::begin(BLACK, WHITE, ORIENTATION);
+void Screen::begin() {
+	Display::begin(BLACK, WHITE, ORIENTATION);
 	clear();
 	_xoff = (_dx - DISPLAY_X) / 2;
 	_yoff = (_dy - DISPLAY_Y) / 2;
 }
 
-void Display::draw(Memory::address a, uint8_t b) {
+void Screen::draw(Memory::address a, uint8_t b) {
 	uint16_t y = DISPLAY_Y - (a % BYTES_PER_LINE) * 8;
 	uint16_t x = (a / BYTES_PER_LINE);
 
