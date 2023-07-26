@@ -1,14 +1,14 @@
-#ifndef __DISPLAY_H__
-#define __DISPLAY_H__
+#ifndef __SCREEN_H__
+#define __SCREEN_H__
 
 #define BYTES_PER_LINE	32
 #define DISPLAY_X	224
 #define DISPLAY_Y	(BYTES_PER_LINE * 8)
-#define	DISPLAY_RAM	DISPLAY_X * BYTES_PER_LINE
+#define	SCREEN_RAM	DISPLAY_X * BYTES_PER_LINE
 
-class Display: public Memory::Device, public TFTDisplay {
+class Screen: public Memory::Device, public Display {
 public:
-	Display(): Memory::Device(DISPLAY_RAM) {}
+	Screen(): Memory::Device(SCREEN_RAM) {}
 	void begin();
 
 #if defined(NO_DISPLAY_BUFFER)
@@ -23,7 +23,7 @@ private:
 	void draw(Memory::address a, uint8_t b);
 
 #if !defined(NO_DISPLAY_BUFFER)
-	uint8_t _buf[DISPLAY_RAM];
+	uint8_t _buf[SCREEN_RAM];
 #endif
 	uint8_t _xoff, _yoff;
 };

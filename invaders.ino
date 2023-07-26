@@ -8,7 +8,7 @@
 #include <i8080.h>
 
 #include "io.h"
-#include "display.h"
+#include "screen.h"
 #include "vblank.h"
 #include "config.h"
 
@@ -25,14 +25,14 @@ prom h(romh, sizeof(romh));
 IO io;
 i8080 cpu(memory, io);
 ram page;
-Display display;
+Screen screen;
 vblank vb(cpu);
 
 static bool paused = false;
 
 static void reset(void) {
 	hardware_reset();
-	display.begin();
+	screen.begin();
 	io.begin();
 	paused = false;
 }
@@ -52,8 +52,8 @@ void setup(void) {
 	// 1k of RAM at 0x2000
 	memory.put(page, 0x2000);
 
-	// 7k display RAM at 0x2400
-	memory.put(display, 0x2400);
+	// 7k screen RAM at 0x2400
+	memory.put(screen, 0x2400);
 
 	reset();
 }
