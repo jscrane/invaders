@@ -2,7 +2,6 @@
  * http://www.emutalk.net/threads/38177-Space-Invaders
  */
 #include <stdarg.h>
-#include <SPI.h>
 #include <r65emu.h>
 #include <ports.h>
 #include <i8080.h>
