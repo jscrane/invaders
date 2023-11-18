@@ -24,7 +24,7 @@ prom h(romh, sizeof(romh));
 
 IO io;
 i8080 cpu(memory, io);
-ram page;
+ram<> page;
 Screen screen;
 vblank vb(cpu);
 
