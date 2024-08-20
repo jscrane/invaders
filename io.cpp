@@ -23,6 +23,8 @@ void IO::begin() {
 
 uint8_t IO::in(uint16_t port, i8080 *cpu) {
 	uint16_t w;
+
+	poll_kbd();
 	switch (port) {
 	case 0:
 		return 0x0f;
@@ -101,6 +103,17 @@ void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
 		Serial.print(pgm_read_byte(debug+b));
 		break;
 #endif
+	}
+}
+
+void IO::poll_kbd() {
+	if (_kbd.available()) {
+		uint16_t scan = _kbd.read();
+		uint8_t key = _kbd.key(scan);
+		if (_kbd.is_up(scan))
+			up(key);
+		else
+			down(key);
 	}
 }
 
