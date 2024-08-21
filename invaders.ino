@@ -22,7 +22,7 @@ prom g(romg, sizeof(romg));
 prom h(romh, sizeof(romh));
 
 ps2_kbd kbd;
-IO io(kbd);
+IO io;
 i8080 cpu(memory, io);
 ram<> page;
 Screen screen;
@@ -30,6 +30,7 @@ vblank vb(cpu);
 
 static void reset(void) {
 	hardware_reset();
+	kbd.reset();
 	screen.begin();
 	io.begin();
 }
@@ -40,9 +41,6 @@ void function_key(uint8_t fn) {
 }
 
 void setup(void) {
-#if defined(DEBUGGING)
-	Serial.begin(TERMINAL_SPEED);
-#endif
 
 	hardware_init(cpu);
 
@@ -64,8 +62,14 @@ void setup(void) {
 
 void loop(void) {
 
-	if (!cpu.halted()) {
-		cpu.run(1000);
-		vb.tick(millis());
+	if (kbd.available()) {
+		uint16_t scan = kbd.read();
+		uint8_t key = kbd.key(scan);
+		if (kbd.is_up(scan))
+			io.up(key);
+		else
+			io.down(key);
 	}
+	if (!io.is_paused() && hardware_run())
+		vb.tick(millis());
 }

@@ -13,6 +13,8 @@
 #define P2_RIGHT	0x2f	// apps
 #define P2_SHOOT	0x12	// l-shift
 
+#define PAUSE		0x29	// space
+
 #if defined(USE_ESPI)
 #define ORIENTATION	reverse_portrait
 #else
