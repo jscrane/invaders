@@ -62,14 +62,8 @@ void setup(void) {
 
 void loop(void) {
 
-	if (kbd.available()) {
-		uint16_t scan = kbd.read();
-		uint8_t key = kbd.key(scan);
-		if (kbd.is_up(scan))
-			io.up(key);
-		else
-			io.down(key);
-	}
+	kbd.poll(io);
+
 	if (!io.is_paused() && hardware_run())
 		vb.tick(millis());
 }

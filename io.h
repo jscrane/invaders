@@ -1,7 +1,7 @@
 #ifndef __IO_H__
 #define __IO_H__
 
-class IO: public PortDevice<i8080> {
+class IO: public PortDevice<i8080>, public matrix_keyboard {
 public:
 	IO() { _p1 = _p2 = 0; }
 	void begin();
