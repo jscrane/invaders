@@ -1,7 +1,6 @@
 /**
  * http://www.emutalk.net/threads/38177-Space-Invaders
  */
-#include <setjmp.h>
 #include <stdarg.h>
 #include <r65emu.h>
 #include <ports.h>
@@ -35,13 +34,9 @@ static void reset(void) {
 	io.begin();
 }
 
-jmp_buf jb;
-
 void function_key(uint8_t fn) {
-	if (fn == 1) {
+	if (fn == 1)
 		reset();
-		longjmp(jb, 1);
-	}
 }
 
 void setup(void) {
@@ -69,7 +64,6 @@ void setup(void) {
 
 void loop(void) {
 
-	setjmp(jb);
 	if (!cpu.halted()) {
 		cpu.run(1000);
 		vb.tick(millis());
