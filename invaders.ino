@@ -21,8 +21,8 @@ prom f(romf, sizeof(romf));
 prom g(romg, sizeof(romg));
 prom h(romh, sizeof(romh));
 
-ps2_kbd kbd;
 IO io;
+ps2_raw_kbd kbd(io);
 i8080 cpu(memory, io);
 ram<> page;
 Screen screen;
@@ -62,7 +62,7 @@ void setup(void) {
 
 void loop(void) {
 
-	kbd.poll(io);
+	kbd.poll();
 
 	if (!io.is_paused() && hardware_run())
 		vb.tick(millis());
