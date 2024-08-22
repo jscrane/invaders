@@ -168,6 +168,9 @@ void IO::up(uint8_t key) {
 	case COIN:
 		_p1 &= ~0x01;
 		break;
+	case PAUSE:
+		_paused = !_paused;
+		break;
 	default:
 		_p1 = _p2 = 0;
 		break;

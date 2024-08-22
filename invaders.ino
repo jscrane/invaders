@@ -22,24 +22,25 @@ prom g(romg, sizeof(romg));
 prom h(romh, sizeof(romh));
 
 IO io;
+ps2_raw_kbd kbd(io);
 i8080 cpu(memory, io);
 ram<> page;
 Screen screen;
 vblank vb(cpu);
 
-static bool paused = false;
-
 static void reset(void) {
 	hardware_reset();
+	kbd.reset();
 	screen.begin();
 	io.begin();
-	paused = false;
+}
+
+void function_key(uint8_t fn) {
+	if (fn == 1)
+		reset();
 }
 
 void setup(void) {
-#if defined(DEBUGGING)
-	Serial.begin(115200);
-#endif
 
 	hardware_init(cpu);
 
@@ -54,29 +55,15 @@ void setup(void) {
 	// 7k screen RAM at 0x2400
 	memory.put(screen, 0x2400);
 
+	kbd.register_fnkey_handler(function_key);
+
 	reset();
 }
 
 void loop(void) {
-	if (ps2.available()) {
-		unsigned scan = ps2.read2();
-		byte key = scan & 0xff;
-		if (is_down(scan))
-			io.down(scan);
-		else
-			switch(key) {
-			case PS2_F1:
-				reset();
-				break;
-			case PAUSE:
-				paused = !paused;
-				break;
-			default:
-				io.up(key);
-				break;
-			}
-	} else if (!paused && !cpu.halted()) {
-		cpu.run(1000);
+
+	kbd.poll();
+
+	if (!io.is_paused() && hardware_run(INSTRUCTIONS))
 		vb.tick(millis());
-	}
 }
