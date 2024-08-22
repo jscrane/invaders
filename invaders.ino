@@ -64,6 +64,6 @@ void loop(void) {
 
 	kbd.poll();
 
-	if (!io.is_paused() && hardware_run())
+	if (!io.is_paused() && hardware_run(INSTRUCTIONS))
 		vb.tick(millis());
 }

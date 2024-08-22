@@ -15,6 +15,8 @@
 
 #define PAUSE		0x29	// space
 
+#define INSTRUCTIONS	500
+
 #if defined(USE_ESPI)
 #define ORIENTATION	reverse_portrait
 #else
