@@ -21,7 +21,7 @@ void IO::begin() {
 #endif
 }
 
-uint8_t IO::in(uint16_t port, i8080 *cpu) {
+uint8_t IO::in(uint16_t port) {
 	uint16_t w;
 	switch (port) {
 	case 0:
@@ -50,7 +50,7 @@ static const char debug[] PROGMEM = {
 };
 #endif
 
-void IO::out(uint16_t port, uint8_t b, i8080 *cpu) {
+void IO::out(uint16_t port, uint8_t b) {
 	switch (port) {
 	case 1:
 		_p1 = b;
