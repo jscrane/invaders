@@ -23,6 +23,7 @@ prom h(romh, sizeof(romh));
 
 IO io;
 ps2_raw_kbd kbd(io);
+Memory memory;
 i8080 cpu(memory, io);
 ram<> page;
 Screen screen;
