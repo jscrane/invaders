@@ -4,6 +4,13 @@ TERMINAL_SPEED := 115200
 CPPFLAGS = -DNO_STORAGE -DNO_SPIRAM -DTERMINAL_SPEED=$(TERMINAL_SPEED)
 LIBRARIES = SPI PS2KeyRaw
 
+ifeq ($t, rp2040)
+BOARD := adafruit_feather_dvi
+FLASH := 8388608_0
+CPPFLAGS += -DHARDWARE_H=\"hw/adafruit_feather_dvi.h\"
+LIBRARIES += PicoDVI Adafruit_GFX Adafruit_BusIO Wire
+endif
+
 ifeq ($t, tivac)
 BOARD := EK-LM4F120XL
 CPPFLAGS += -DHARDWARE_H=\"hw/stellarpad-example.h\"
