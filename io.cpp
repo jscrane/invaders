@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <r65emu.h>
-#include <ports.h>
 #include <i8080.h>
 #include <hardware.h>
 #include <sound_dac.h>

@@ -2,7 +2,7 @@ t ?= esp32
 
 TERMINAL_SPEED := 115200
 CPPFLAGS = -DNO_STORAGE -DNO_SPIRAM -DTERMINAL_SPEED=$(TERMINAL_SPEED)
-LIBRARIES = SPI PS2KeyRaw
+LIBRARIES = SPI PS2KeyRaw SimpleTimer
 
 ifeq ($t, rp2040)
 BOARD := adafruit_feather_dvi
@@ -36,7 +36,7 @@ ifeq ($b, lilygo)
 BOARD := ttgo-t7-v14-mini32
 SERIAL_PORT := /dev/ttyACM0
 CPPFLAGS += -DHARDWARE_H=\"hw/ttgo-t7-v14-mini32.h\"
-LIBRARIES += FabGL WiFi
+LIBRARIES += ESP32Lib
 
 else
 BOARD := lolin32

@@ -1,9 +1,8 @@
-#ifndef __VBLANK_H__
-#define __VBLANK_H__
+#pragma once
 
 class vblank {
 public:
-	vblank(CPU &cpu): _cpu(cpu), _last_int(0), _interrupt(1) {}
+	vblank(i8080 &cpu): _cpu(cpu), _last_int(0), _interrupt(1) {}
 
 	void tick(uint32_t now) {
 		uint32_t dt = now - _last_int;
@@ -16,9 +15,7 @@ public:
 
 	static const int interval = 1000 / 60 / 2;
 private:
-	CPU &_cpu;
+	i8080 &_cpu;
 	uint32_t _last_int;
 	uint8_t _interrupt;
 };
-
-#endif

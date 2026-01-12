@@ -1,7 +1,6 @@
-#ifndef __IO_H__
-#define __IO_H__
+#pragma once
 
-class IO: public PortDevice, public matrix_keyboard {
+class IO: public matrix_keyboard {
 public:
 	IO() { _p1 = _p2 = 0; }
 	void begin();
@@ -17,5 +16,3 @@ private:
 	uint8_t _soff, _s0, _s1, _p1, _p2;
 	bool _paused;
 };
-
-#endif

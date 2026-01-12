@@ -3,7 +3,6 @@
  */
 #include <stdarg.h>
 #include <r65emu.h>
-#include <ports.h>
 #include <i8080.h>
 
 #include "io.h"
@@ -24,7 +23,7 @@ prom h(romh, sizeof(romh));
 IO io;
 ps2_raw_kbd kbd(io);
 Memory memory;
-i8080 cpu(memory, io);
+i8080 cpu(memory);
 ram<> page;
 Screen screen;
 vblank vb(cpu);
@@ -42,6 +41,9 @@ void function_key(uint8_t fn) {
 }
 
 void setup(void) {
+
+	cpu.set_port_out_handler([](uint16_t port, uint8_t b) { io.out(port, b); });
+	cpu.set_port_in_handler([](uint16_t port) { return io.in(port); });
 
 	hardware_init(cpu);
 
