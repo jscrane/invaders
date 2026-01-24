@@ -24,28 +24,17 @@ IO io;
 ps2_raw_kbd kbd(io);
 Memory memory;
 i8080 cpu(memory);
+Machine machine(cpu);
 ram<> page;
 Screen screen;
 vblank vb(cpu);
-
-static void reset(void) {
-	hardware_reset();
-	kbd.reset();
-	screen.begin();
-	io.begin();
-}
-
-void function_key(uint8_t fn) {
-	if (fn == 1)
-		reset();
-}
 
 void setup(void) {
 
 	cpu.set_port_out_handler([](uint16_t port, uint8_t b) { io.out(port, b); });
 	cpu.set_port_in_handler([](uint16_t port) { return io.in(port); });
 
-	hardware_init(cpu);
+	machine.init();
 
 	memory.put(h, 0x0000);
 	memory.put(g, 0x0800);
@@ -58,15 +47,24 @@ void setup(void) {
 	// 7k screen RAM at 0x2400
 	memory.put(screen, 0x2400);
 
-	kbd.register_fnkey_handler(function_key);
+	kbd.register_fnkey_handler([](uint8_t fn) {
+		if (fn == 1)
+			machine.reset();
+	});
 
-	reset();
+	machine.register_reset_handler([](bool) {
+		kbd.reset();
+		screen.begin();
+		io.begin();
+	});
+	machine.reset();
 }
 
 void loop(void) {
 
 	kbd.poll();
+	machine.run();
 
-	if (!io.is_paused() && hardware_run(INSTRUCTIONS))
+	if (!io.is_paused() && !cpu.halted())
 		vb.tick(millis());
 }
