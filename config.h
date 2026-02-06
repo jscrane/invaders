@@ -1,5 +1,4 @@
-#ifndef __CONFIG_H__
-#define __CONFIG_H__
+#pragma once
 
 #define P1_START	0x16	// 1
 #define P2_START	0x1e	// 2
@@ -23,6 +22,4 @@
 #define ORIENTATION	landscape
 #else
 #define ORIENTATION	portrait
-#endif
-
 #endif

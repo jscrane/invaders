@@ -24,7 +24,7 @@ IO io;
 ps2_raw_kbd kbd(io);
 Memory memory;
 i8080 cpu(memory);
-Machine machine(cpu);
+Arduino machine(cpu);
 ram<> page;
 Screen screen;
 vblank vb(cpu);
@@ -34,7 +34,7 @@ void setup(void) {
 	cpu.set_port_out_handler([](uint16_t port, uint8_t b) { io.out(port, b); });
 	cpu.set_port_in_handler([](uint16_t port) { return io.in(port); });
 
-	machine.init();
+	machine.begin();
 
 	memory.put(h, 0x0000);
 	memory.put(g, 0x0800);
