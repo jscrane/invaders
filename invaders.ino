@@ -51,6 +51,7 @@ void setup(void) {
 		if (fn == 1)
 			machine.reset();
 	});
+	machine.register_pollable(kbd);
 
 	machine.register_reset_handler([](bool) {
 		kbd.reset();
@@ -62,7 +63,6 @@ void setup(void) {
 
 void loop(void) {
 
-	kbd.poll();
 	machine.run();
 
 	if (!io.is_paused() && !cpu.halted())
