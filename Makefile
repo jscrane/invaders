@@ -7,7 +7,6 @@ LIBRARIES = PS2KeyRaw SimpleTimer
 ifeq ($t, rp2040)
 BOARD := adafruit_feather_dvi
 flash := 8388608_0
-CPPFLAGS += -DHARDWARE_H=\"hw/adafruit_feather_dvi.h\"
 LIBRARIES += PicoDVI Adafruit_GFX Adafruit_BusIO Wire SPI
 endif
 
@@ -26,7 +25,12 @@ ifeq ($t, esp32)
 ifeq ($b, lilygo)
 BOARD := ttgo-t7-v14-mini32
 SERIAL_PORT := /dev/ttyACM0
-CPPFLAGS += -DHARDWARE_H=\"hw/ttgo-t7-v14-mini32.h\"
+LIBRARIES += ESP32Lib
+
+else ifeq ($b, olimex)
+BOARD := esp32-sbc-fabgl
+SERIAL_PORT := /dev/ttyUSB0
+CPPFLAGS += -DVGA_BIT_DEPTH=1 -DVGA_RESOLUTION=VGAMode::MODE640x480 -DVGA_FONT=Font8x8
 LIBRARIES += ESP32Lib
 
 else
