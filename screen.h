@@ -8,7 +8,7 @@
 
 class Screen: public Memory::Device, public Display {
 public:
-	Screen(): Memory::Device(SCREEN_RAM) {}
+	Screen(): Memory::Device(SCREEN_RAM), Display() {}
 	void begin();
 
 	void operator=(uint8_t b) { if (_buf[_acc] != b) draw(_acc, b); }

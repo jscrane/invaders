@@ -3,6 +3,7 @@
 #include <machine.h>
 #include <memory.h>
 #include <display.h>
+#include <hardware.h>
 
 #include "config.h"
 #include "screen.h"
@@ -13,8 +14,9 @@ void Screen::begin() {
 }
 
 void Screen::draw(Memory::address a, uint8_t b) {
-	uint16_t y = DISPLAY_Y - (a % BYTES_PER_LINE) * 8;
-	uint16_t x = (a / BYTES_PER_LINE);
+
+	int16_t y = DISPLAY_Y - (a % BYTES_PER_LINE) * 8;
+	int16_t x = (a / BYTES_PER_LINE);
 
 	uint8_t d = _buf[a] ^ b;
 	for (unsigned i = 0, bit = 0x01; i < 8; i++, bit *= 2)

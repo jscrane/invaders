@@ -16,10 +16,4 @@
 
 #define INSTRUCTIONS	500
 
-#if defined(USE_ESPI)
-#define ORIENTATION	reverse_portrait
-#elif defined(USE_DVI)
-#define ORIENTATION	landscape
-#else
 #define ORIENTATION	portrait
-#endif
