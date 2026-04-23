@@ -7,7 +7,6 @@
 
 #include "io.h"
 #include "screen.h"
-#include "vblank.h"
 #include "config.h"
 
 #include "rome.h"
@@ -27,7 +26,8 @@ i8080 cpu(memory);
 Arduino machine(cpu);
 ram<> page;
 Screen screen;
-vblank vb(cpu);
+
+const uint32_t vblank = 1000000 / 60 / 2;
 
 void setup(void) {
 
@@ -53,6 +53,11 @@ void setup(void) {
 	});
 	machine.register_pollable(kbd);
 
+	machine.interval_timer(vblank, [interrupt = 1] () mutable {
+		cpu.raise(interrupt);
+		interrupt = interrupt == 1? 2: 1;
+	});
+
 	machine.register_reset_handler([](bool) {
 		kbd.reset();
 		screen.begin();
@@ -64,7 +69,4 @@ void setup(void) {
 void loop(void) {
 
 	machine.run(io.is_paused()? CLK_STOPPED: CLK_2MHZ);
-
-	if (!cpu.halted())
-		vb.tick(millis());
 }

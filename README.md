@@ -5,8 +5,6 @@ Space Invaders emulation on various modern microcontrollers.
 
 For more information, see this [thread](http://www.emutalk.net/threads/38177-Space-Invaders).
 
-I used this [testsuite](http://www.idb.me.uk/sunhillow/8080.html) to find bugs.
-
 Kudos to [MoleskiCoder](https://github.com/MoleskiCoder/invaders) for
 pointers to sound emulation.
 
