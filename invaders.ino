@@ -63,8 +63,8 @@ void setup(void) {
 
 void loop(void) {
 
-	machine.run();
+	machine.run(io.is_paused()? CLK_STOPPED: CLK_2MHZ);
 
-	if (!io.is_paused() && !cpu.halted())
+	if (!cpu.halted())
 		vb.tick(millis());
 }

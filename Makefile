@@ -2,7 +2,7 @@ t ?= esp32
 
 TERMINAL_SPEED := 115200
 CPPFLAGS = -DNO_STORAGE -DNO_SPIRAM -DTERMINAL_SPEED=$(TERMINAL_SPEED)
-LIBRARIES = PS2KeyRaw SimpleTimer Adafruit_GFX Adafruit_BusIO Wire SPI
+LIBRARIES = PS2KeyRaw Adafruit_GFX Adafruit_BusIO Wire SPI
 
 ifeq ($t, rp2040)
 BOARD := adafruit_feather_dvi
@@ -15,9 +15,10 @@ ifeq ($t, esp8266)
 BOARD := d1_mini
 baud := 921600
 eesz := 4M
+xtal := 160
 
 CPPFLAGS += -DUSER_SETUP_LOADED -DILI9341_DRIVER -DTFT_CS=PIN_D8 -DTFT_DC=PIN_D1 \
-	-DTFT_RST=-1 -DSPI_FREQUENCY=40000000 -DLOAD_GLCD \
+	-DTFT_RST=-1 -DSPI_FREQUENCY=80000000 -DLOAD_GLCD \
 	-DHARDWARE_H=\"hw/esp8bit.h\"
 LIBRARIES += TFT_eSPI
 endif
