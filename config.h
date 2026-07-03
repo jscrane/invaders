@@ -14,6 +14,4 @@
 
 #define PAUSE		0x29	// space
 
-#define INSTRUCTIONS	500
-
 #define ORIENTATION	portrait

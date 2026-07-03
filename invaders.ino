@@ -45,11 +45,14 @@ void setup(void) {
 	memory.put(page, 0x2000);
 
 	// 7k screen RAM at 0x2400
-	memory.put(screen, 0x2400);
+	memory.put(screen, SCREEN_BASE);
 
 	kbd.register_fnkey_handler([](uint8_t fn) {
 		if (fn == 1)
 			machine.reset();
+		else if (fn == 6 || fn == 7) {
+			// checkpoint / restore
+		}
 	});
 	machine.register_pollable(kbd);
 

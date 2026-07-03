@@ -32,3 +32,16 @@ void Screen::draw(Memory::address a, uint8_t b) {
 		}
 	_buf[a] = b;
 }
+
+void Screen::checkpoint(Checkpoint &c) {
+
+	c.write(_buf, sizeof(_buf));
+}
+
+void Screen::restore(Checkpoint &c) {
+
+	c.read(_buf, sizeof(_buf));
+
+	for (unsigned i = 0; i < sizeof(_buf); i++)
+		draw(SCREEN_BASE + i, _buf[i]);
+}
