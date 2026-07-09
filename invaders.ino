@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <r65emu.h>
 #include <i8080.h>
+#include <serial_checkpoint.h>
 
 #include "io.h"
 #include "screen.h"
@@ -31,6 +32,10 @@ const uint32_t vblank = 1000000 / 60 / 2;
 
 void setup(void) {
 
+#if DEBUGGING == DEBUG_NONE
+	Serial.begin(TERMINAL_SPEED);
+#endif
+
 	cpu.set_port_out_handler([](uint16_t port, uint8_t b) { io.out(port, b); });
 	cpu.set_port_in_handler([](uint16_t port) { return io.in(port); });
 
@@ -48,10 +53,20 @@ void setup(void) {
 	memory.put(screen, SCREEN_BASE);
 
 	kbd.register_fnkey_handler([](uint8_t fn) {
-		if (fn == 1)
+		if (fn == 1) {
 			machine.reset();
-		else if (fn == 6 || fn == 7) {
-			// checkpoint / restore
+			return;
+		}
+		if (fn == 6) {
+			SerialHexCheckpoint c(Serial);
+			machine.checkpoint(c);
+			return;
+		}
+		if (fn == 7) {
+			io.pause();
+			SerialHexCheckpoint c(Serial);
+			machine.restore(c);
+			return;
 		}
 	});
 	machine.register_pollable(kbd);

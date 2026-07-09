@@ -42,6 +42,12 @@ void Screen::restore(Checkpoint &c) {
 
 	c.read(_buf, sizeof(_buf));
 
-	for (unsigned i = 0; i < sizeof(_buf); i++)
-		draw(SCREEN_BASE + i, _buf[i]);
+	clear();
+	for (unsigned i = 0; i < sizeof(_buf); i++) {
+		uint8_t b = _buf[i];
+		_buf[i] = 0;
+		draw(i, b);
+		if ((i % BYTES_PER_LINE) == 0)
+			_machine->yield();
+	}
 }
