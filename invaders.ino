@@ -53,20 +53,17 @@ void setup(void) {
 	memory.put(screen, SCREEN_BASE);
 
 	kbd.register_fnkey_handler([](uint8_t fn) {
-		if (fn == 1) {
+		switch(fn) {
+		case 1:
 			machine.reset();
-			return;
-		}
-		if (fn == 6) {
-			SerialHexCheckpoint c(Serial);
-			machine.checkpoint(c);
-			return;
-		}
-		if (fn == 7) {
+			break;
+		case 6:
+			serial_checkpoint(Serial);
+			break;
+		case 7:
+			serial_restore(Serial);
 			io.pause();
-			SerialHexCheckpoint c(Serial);
-			machine.restore(c);
-			return;
+			break;
 		}
 	});
 	machine.register_pollable(kbd);
