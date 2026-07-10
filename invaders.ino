@@ -4,7 +4,6 @@
 #include <stdarg.h>
 #include <r65emu.h>
 #include <i8080.h>
-#include <serial_checkpoint.h>
 
 #include "io.h"
 #include "screen.h"
