@@ -31,6 +31,10 @@ const uint32_t vblank = 1000000 / 60 / 2;
 
 void setup(void) {
 
+#if DEBUGGING == DEBUG_NONE
+	Serial.begin(TERMINAL_SPEED);
+#endif
+
 	cpu.set_port_out_handler([](uint16_t port, uint8_t b) { io.out(port, b); });
 	cpu.set_port_in_handler([](uint16_t port) { return io.in(port); });
 
@@ -45,11 +49,21 @@ void setup(void) {
 	memory.put(page, 0x2000);
 
 	// 7k screen RAM at 0x2400
-	memory.put(screen, 0x2400);
+	memory.put(screen, SCREEN_BASE);
 
 	kbd.register_fnkey_handler([](uint8_t fn) {
-		if (fn == 1)
+		switch(fn) {
+		case 1:
 			machine.reset();
+			break;
+		case 6:
+			serial_checkpoint(Serial);
+			break;
+		case 7:
+			serial_restore(Serial);
+			io.pause();
+			break;
+		}
 	});
 	machine.register_pollable(kbd);
 

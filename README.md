@@ -5,8 +5,7 @@ Space Invaders emulation on various modern microcontrollers.
 
 For more information, see this [thread](http://www.emutalk.net/threads/38177-Space-Invaders).
 
-Kudos to [MoleskiCoder](https://github.com/MoleskiCoder/invaders) for
-pointers to sound emulation.
+Kudos to [MoleskiCoder](https://github.com/MoleskiCoder/invaders) for pointers to sound emulation.
 
 Keys
 ----
@@ -20,3 +19,6 @@ Keys
 - APPS: player-2 right
 - L-SHIFT: player-2 shoot
 - SPACE: pause
+- F1: machine reset
+- F6: save machine state to serial
+- F7: restore machine state from serial

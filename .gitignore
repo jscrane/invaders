@@ -6,6 +6,8 @@
 spiffs.img
 .build
 *.mk
+serialout.txt
+minicom.cap
 
 # Compiled Object files
 *.slo

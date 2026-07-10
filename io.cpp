@@ -36,7 +36,7 @@ uint8_t IO::in(uint16_t port) {
 	return 0x00;
 }
 
-#if defined(DEBUGGING)
+#if DEBUGGING != DEBUG_NONE
 static const char debug[] PROGMEM = {
 	'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
 	'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -95,7 +95,7 @@ void IO::out(uint16_t port, uint8_t b) {
 			playing = sound.play(ufohit, sizeof(ufohit));
 		break;
 #endif
-#if defined(DEBUGGING)
+#if DEBUGGING != DEBUG_NONE
 	case 6:
 		Serial.print(pgm_read_byte(debug+b));
 		break;
