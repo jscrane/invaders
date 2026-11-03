@@ -4,7 +4,9 @@
 #include <stdarg.h>
 #include <r65emu.h>
 #include <i8080.h>
+#include <serial_checkpoint.h>
 
+#include "kbd_input.h"
 #include "io.h"
 #include "screen.h"
 #include "config.h"
@@ -19,8 +21,9 @@ prom f(romf, sizeof(romf));
 prom g(romg, sizeof(romg));
 prom h(romh, sizeof(romh));
 
-IO io;
-ps2_raw_kbd kbd(io);
+kbd_input input;
+ps2_raw_kbd kbd(input);
+IO io(input);
 Memory memory;
 i8080 cpu(memory);
 Arduino machine(cpu);
@@ -61,7 +64,7 @@ void setup(void) {
 			break;
 		case 7:
 			serial_restore(Serial);
-			io.pause();
+			input.pause();
 			break;
 		}
 	});
@@ -75,12 +78,12 @@ void setup(void) {
 	machine.register_reset_handler([](bool) {
 		kbd.reset();
 		screen.begin();
-		io.begin();
+		input.reset();
 	});
 	machine.reset();
 }
 
 void loop(void) {
 
-	machine.run(io.is_paused()? CLK_STOPPED: CLK_2MHZ);
+	machine.run(input.is_paused()? CLK_STOPPED: CLK_2MHZ);
 }

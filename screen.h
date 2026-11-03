@@ -6,6 +6,8 @@
 #define	SCREEN_RAM	DISPLAY_X * BYTES_PER_LINE
 #define SCREEN_BASE	0x2400
 
+#include <display.h>
+
 class Screen: public Memory::Device, public Display {
 public:
 	Screen(): Memory::Device(SCREEN_RAM), Display() {}

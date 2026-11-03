@@ -3,7 +3,9 @@
 #include <i8080.h>
 #include <hardware.h>
 #include <sound_dac.h>
+#include <debugging.h>
 
+#include "input_ports.h"
 #include "io.h"
 #include "config.h"
 
@@ -17,6 +19,9 @@ const uint8_t *playing;
 void IO::begin() {
 #if defined(DAC_SOUND)
 	sound.begin(DAC_SOUND, 11127);
+	DBG_INI("sound");
+#else
+	DBG_INI("no sound");
 #endif
 }
 
@@ -26,9 +31,9 @@ uint8_t IO::in(uint16_t port) {
 	case 0:
 		return 0x0f;
 	case 1:
-		return _p1;
+		return _input.read_port1();
 	case 2:
-		return _p2;
+		return _input.read_port2();
 	case 3:
 		w = (_s1 << 8) + _s0;
 		return (w >> (8 - _soff)) & 0xff;
@@ -51,9 +56,6 @@ static const char debug[] PROGMEM = {
 
 void IO::out(uint16_t port, uint8_t b) {
 	switch (port) {
-	case 1:
-		_p1 = b;
-		break;
 	case 2:
 		_soff = b & 0x07;
 		break;
@@ -95,83 +97,10 @@ void IO::out(uint16_t port, uint8_t b) {
 			playing = sound.play(ufohit, sizeof(ufohit));
 		break;
 #endif
-#if DEBUGGING != DEBUG_NONE
+#if DEBUGGING & DEBUG_EMU
 	case 6:
 		Serial.print(pgm_read_byte(debug+b));
 		break;
 #endif
-	}
-}
-
-void IO::down(uint8_t key) {
-	switch (key) {
-	case P1_START:
-		_p1 |= 0x04;
-		break;
-	case P1_LEFT:
-		_p1 |= 0x20;
-		break;
-	case P1_RIGHT:
-		_p1 |= 0x40;
-		break;
-	case P1_SHOOT:
-		_p1 |= 0x10;
-		break;
-	case P2_START:
-		_p1 |= 0x02;
-		break;
-	case P2_LEFT:
-		_p2 |= 0x20;
-		break;
-	case P2_RIGHT:
-		_p2 |= 0x40;
-		break;
-	case P2_SHOOT:
-		_p2 |= 0x10;
-		break;
-	case COIN:
-		_p1 |= 0x01;
-		break;
-	default:
-		_p1 = _p2 = 0;
-		break;
-	}
-}
-
-void IO::up(uint8_t key) {
-	switch (key) {
-	case P1_START:
-		_p1 &= ~0x04;
-		break;
-	case P1_LEFT:
-		_p1 &= ~0x20;
-		break;
-	case P1_RIGHT:
-		_p1 &= ~0x40;
-		break;
-	case P1_SHOOT:
-		_p1 &= ~0x10;
-		break;
-	case P2_START:
-		_p1 &= ~0x02;
-		break;
-	case P2_LEFT:
-		_p2 &= ~0x20;
-		break;
-	case P2_RIGHT:
-		_p2 &= ~0x40;
-		break;
-	case P2_SHOOT:
-		_p2 &= ~0x10;
-		break;
-	case COIN:
-		_p1 &= ~0x01;
-		break;
-	case PAUSE:
-		_paused = !_paused;
-		break;
-	default:
-		_p1 = _p2 = 0;
-		break;
 	}
 }
