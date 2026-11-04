@@ -42,6 +42,7 @@ void setup(void) {
 	cpu.set_port_in_handler([](uint16_t port) { return io.in(port); });
 
 	machine.begin();
+	io.begin();
 
 	memory.put(h, 0x0000);
 	memory.put(g, 0x0800);
@@ -54,15 +55,16 @@ void setup(void) {
 	// 7k screen RAM at 0x2400
 	memory.put(screen, SCREEN_BASE);
 
-	kbd.register_fnkey_handler([](uint8_t fn) {
+	kbd.begin();
+	kbd.register_fnkey_handler([](uint16_t fn) {
 		switch(fn) {
-		case 1:
+		case F1:
 			machine.reset();
 			break;
-		case 6:
+		case F6:
 			serial_checkpoint(Serial);
 			break;
-		case 7:
+		case F7:
 			serial_restore(Serial);
 			input.pause();
 			break;

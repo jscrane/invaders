@@ -1,77 +1,74 @@
-#include <cstdint>
-#include <ps2_keyboard.h>
-
 #include "kbd_input.h"
 
-void kbd_input::down(uint16_t key) {
-	switch (key) {
+void kbd_input::down(uint16_t scan) {
+	switch (scan) {
 	case P1_START:
-		_p1 |= 0x04;
+		_p1_start = true;
 		break;
 	case P1_LEFT:
-		_p1 |= 0x20;
+		_p1_left = true;
 		break;
 	case P1_RIGHT:
-		_p1 |= 0x40;
+		_p1_right = true;
 		break;
 	case P1_SHOOT:
-		_p1 |= 0x10;
+		_p1_shoot = true;
 		break;
 	case P2_START:
-		_p1 |= 0x02;
+		_p2_start = true;
 		break;
 	case P2_LEFT:
-		_p2 |= 0x20;
+		_p2_left = true;
 		break;
 	case P2_RIGHT:
-		_p2 |= 0x40;
+		_p2_right = true;
 		break;
 	case P2_SHOOT:
-		_p2 |= 0x10;
+		_p2_shoot = true;
 		break;
 	case COIN:
-		_p1 |= 0x01;
+		_coin = true;
 		break;
 	default:
-		_p1 = _p2 = 0;
+		clear_ports();
 		break;
 	}
 }
 
-void kbd_input::up(uint16_t key) {
-	switch (key) {
+void kbd_input::up(uint16_t scan) {
+	switch (scan) {
 	case P1_START:
-		_p1 &= ~0x04;
+		_p1_start = false;
 		break;
 	case P1_LEFT:
-		_p1 &= ~0x20;
+		_p1_left = false;
 		break;
 	case P1_RIGHT:
-		_p1 &= ~0x40;
+		_p1_right = false;
 		break;
 	case P1_SHOOT:
-		_p1 &= ~0x10;
+		_p1_shoot = false;
 		break;
 	case P2_START:
-		_p1 &= ~0x02;
+		_p2_start = false;
 		break;
 	case P2_LEFT:
-		_p2 &= ~0x20;
+		_p2_left = false;
 		break;
 	case P2_RIGHT:
-		_p2 &= ~0x40;
+		_p2_right = false;
 		break;
 	case P2_SHOOT:
-		_p2 &= ~0x10;
+		_p2_shoot = false;
 		break;
 	case COIN:
-		_p1 &= ~0x01;
+		_coin = false;
 		break;
 	case PAUSE:
 		_paused = !_paused;
 		break;
 	default:
-		_p1 = _p2 = 0;
+		clear_ports();
 		break;
 	}
 }

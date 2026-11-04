@@ -7,6 +7,8 @@ For more information, see this [thread](http://www.emutalk.net/threads/38177-Spa
 
 Kudos to [MoleskiCoder](https://github.com/MoleskiCoder/invaders) for pointers to sound emulation.
 
+This emulation requires a PS/2 keyboard.
+
 Keys
 ----
 - 1: 1-player start
