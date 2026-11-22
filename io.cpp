@@ -5,7 +5,7 @@
 #include <sound_dac.h>
 #include <debugging.h>
 
-#include "input_ports.h"
+#include "switches.h"
 #include "io.h"
 #include "config.h"
 
@@ -31,9 +31,9 @@ uint8_t IO::in(uint16_t port) {
 	case 0:
 		return 0x0f;
 	case 1:
-		return _input.read_port1();
+		return _switches.port1();
 	case 2:
-		return _input.read_port2();
+		return _switches.port2();
 	case 3:
 		w = (_s1 << 8) + _s0;
 		return (w >> (8 - _soff)) & 0xff;

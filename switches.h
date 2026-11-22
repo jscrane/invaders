@@ -1,8 +1,8 @@
 #pragma once
 
-class input_ports {
+class switches {
 public:
-	uint8_t read_port1() const {
+	uint8_t port1() const {
 		uint8_t p = 0;
 		if (_coin)     p |= 0x01;
 		if (_p2_start) p |= 0x02;
@@ -13,7 +13,7 @@ public:
 		return p;
 	}
 
-	uint8_t read_port2() const {
+	uint8_t port2() const {
 		uint8_t p = 0;
 		if (_p2_shoot) p |= 0x10;
 		if (_p2_left)  p |= 0x20;
@@ -24,12 +24,12 @@ public:
 	bool is_paused() const { return _paused; }
 	void pause() { _paused = true; }
 
-	void reset() { clear_ports(); _paused = false; }
+	void reset() { release_all(); _paused = false; }
 
 protected:
-	input_ports() { reset(); }
+	switches() { reset(); }
 
-	void clear_ports() {
+	void release_all() {
 		_p1_start = _p1_left = _p1_right = _p1_shoot = false;
 		_p2_start = _p2_left = _p2_right = _p2_shoot = false;
 		_coin = false;
