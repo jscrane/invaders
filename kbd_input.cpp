@@ -30,7 +30,7 @@ void kbd_input::down(uint16_t scan) {
 		_coin = true;
 		break;
 	default:
-		clear_ports();
+		release_all();
 		break;
 	}
 }
@@ -68,7 +68,7 @@ void kbd_input::up(uint16_t scan) {
 		_paused = !_paused;
 		break;
 	default:
-		clear_ports();
+		release_all();
 		break;
 	}
 }

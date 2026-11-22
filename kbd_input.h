@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <ps2_raw_kbd.h>
 
-#include "input_ports.h"
+#include "switches.h"
 
 #define P1_START	PS2_KEY_1
 #define P2_START	PS2_KEY_2
@@ -19,11 +19,11 @@
 
 #define PAUSE		PS2_SPACE
 
-class kbd_input: public matrix_keyboard, public input_ports {
+class kbd_input: public matrix_keyboard, public switches {
 public:
 	kbd_input() { reset(); }
 
 	void down(uint16_t key) override;
 	void up(uint16_t key) override;
-	void reset() override { input_ports::reset(); }
+	void reset() override { switches::reset(); }
 };

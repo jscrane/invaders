@@ -1,10 +1,10 @@
 #pragma once
 
-class input_ports;
+class switches;
 
 class IO {
 public:
-	IO(input_ports &in): _input(in) {}
+	IO(switches &s): _switches(s) {}
 	void begin();
 
 	uint8_t in(uint16_t p);
@@ -12,5 +12,5 @@ public:
 
 private:
 	uint8_t _soff, _s0, _s1;
-	input_ports &_input;
+	switches &_switches;
 };
